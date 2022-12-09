@@ -17,7 +17,7 @@ const { startMJPGStreamer } = require('./mjpg-streamer.js');
 async function start() {
 
   try {
-    const writeSerial = startSerial(config.serialport);
+    // const writeSerial = startSerial(config.serialport);
     await startMJPGStreamer(config.mjpg_streamer);
 
     function websocketHandler(ws) {
@@ -26,7 +26,7 @@ async function start() {
         const msg = JSON.parse(data.toString());
         switch (msg.type) {
           case 'write_serial':
-            writeSerial(msg.payload);
+            // writeSerial(msg.payload);
             break;
         }
       });
