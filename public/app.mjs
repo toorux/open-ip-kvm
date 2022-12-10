@@ -14,6 +14,7 @@ new Vue({
     mouseMoveSlice: [0, 0],
     activeDialog: '',
     pasteContent: '',
+    customText: '',
   },
   mounted() {
     this.init();
@@ -40,6 +41,19 @@ new Vue({
       } catch (e) {
         alert(e.toString());
       }
+    },
+    async sendCustomText() {
+      if (!this.customText) return;
+      const hexStrs = this.customText.split(",");
+      const buf = [];
+      for (const hex of hexStrs) {
+        buf.push(parseInt(hex.trim(), 16));
+      }
+      this.$channel.send(JSON.stringify({
+        type: 'write_serial',
+        payload: buf
+      }));
+      console.log(this.customText, hexStrs, buf);
     },
     async pingStream(port) {
       try {
